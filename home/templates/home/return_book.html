@@ -1,0 +1,527 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Return Book | Library Management System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            background: #1e293b;
+            color: white;
+            padding: 16px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #38bdf8;
+        }
+
+        .logout {
+            background: #ef4444;
+            padding: 8px 14px;
+            border-radius: 6px;
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+            width: 90%;
+            max-width: 650px;
+
+            margin: 60px auto;
+        }
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .card {
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-header {
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+        .icon {
+            font-size: 50px;
+
+            margin-bottom: 15px;
+        }
+
+        .card-header h1 {
+            color: #1e293b;
+
+            font-size: 28px;
+
+            margin-bottom: 8px;
+        }
+
+        .card-header p {
+            color: #64748b;
+        }
+
+        /* =========================
+           BOOK INFORMATION
+        ========================= */
+
+        .book-info {
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 8px;
+
+            padding: 20px;
+
+            margin-bottom: 25px;
+        }
+
+        .info-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 10px 0;
+
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #64748b;
+
+            font-weight: bold;
+        }
+
+        .value {
+            color: #1e293b;
+
+            font-weight: 500;
+
+            text-align: right;
+        }
+
+        /* =========================
+           WARNING
+        ========================= */
+
+        .warning {
+            background: #fff7ed;
+
+            border: 1px solid #fed7aa;
+
+            color: #9a3412;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            margin-bottom: 25px;
+
+            line-height: 1.5;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .buttons {
+            display: flex;
+
+            gap: 15px;
+
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 25px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+            cursor: pointer;
+        }
+
+        .return-btn {
+            background: #16a34a;
+
+            color: white;
+        }
+
+        .return-btn:hover {
+            background: #15803d;
+        }
+
+        .cancel-btn {
+            background: #e2e8f0;
+
+            color: #334155;
+        }
+
+        .cancel-btn:hover {
+            background: #cbd5e1;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            padding: 25px;
+
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                margin-top: 12px;
+
+                gap: 12px;
+
+                flex-wrap: wrap;
+            }
+
+            .container {
+                width: 94%;
+
+                margin: 30px auto;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            .info-row {
+                flex-direction: column;
+
+                gap: 5px;
+            }
+
+            .value {
+                text-align: left;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            📚 Library Management System
+        </div>
+
+        <div class="nav-links">
+
+            <a href="{% url 'home' %}">
+                Dashboard
+            </a>
+
+            <a href="{% url 'books' %}">
+                Books
+            </a>
+
+            <a href="{% url 'members' %}">
+                Members
+            </a>
+
+            <a href="{% url 'issued_books' %}">
+                Issued Books
+            </a>
+
+            <a href="{% url 'logout' %}"
+               class="logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <div class="container">
+
+        <div class="card">
+
+
+            <!-- HEADER -->
+
+            <div class="card-header">
+
+                <div class="icon">
+                    ↩️
+                </div>
+
+                <h1>
+                    Return Book
+                </h1>
+
+                <p>
+                    Confirm that this book is being returned.
+                </p>
+
+            </div>
+
+
+            <!-- =========================
+                 BOOK DETAILS
+            ========================= -->
+
+            <div class="book-info">
+
+
+                <div class="info-row">
+
+                    <span class="label">
+                        Book
+                    </span>
+
+                    <span class="value">
+                        {{ issue.book.title }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="label">
+                        Author
+                    </span>
+
+                    <span class="value">
+                        {{ issue.book.author }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="label">
+                        Member
+                    </span>
+
+                    <span class="value">
+                        {{ issue.member.name }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="label">
+                        Membership ID
+                    </span>
+
+                    <span class="value">
+                        {{ issue.member.membership_id }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="label">
+                        Issue Date
+                    </span>
+
+                    <span class="value">
+                        {{ issue.issue_date|date:"d M Y" }}
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="label">
+                        Due Date
+                    </span>
+
+                    <span class="value">
+                        {{ issue.due_date|date:"d M Y" }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =========================
+                 WARNING
+            ========================= -->
+
+            <div class="warning">
+
+                ⚠️ <strong>Please confirm:</strong>
+
+                Returning this book will increase the
+                available book quantity.
+
+                If the book is returned after the due date,
+                a fine will be calculated automatically.
+
+            </div>
+
+
+            <!-- =========================
+                 BUTTONS
+            ========================= -->
+
+            <div class="buttons">
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="btn return-btn"
+                    >
+                        ✓ Confirm Return
+                    </button>
+
+                </form>
+
+
+                <a
+                    href="{% url 'issued_books' %}"
+                    class="btn cancel-btn"
+                >
+                    Cancel
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        © 2026 Library Management System.
+        All rights reserved.
+
+    </footer>
+
+
+</body>
+
+</html>

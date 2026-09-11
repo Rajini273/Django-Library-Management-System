@@ -1,0 +1,544 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Book - Library Management System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            background: #1f2937;
+            color: white;
+
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+            max-width: 850px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            font-size: 30px;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #6b7280;
+        }
+
+        /* =========================
+           FORM CARD
+        ========================= */
+
+        .form-card {
+            background: white;
+            padding: 35px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+            color: #374151;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 12px 14px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+
+        /* =========================
+           INFORMATION BOX
+        ========================= */
+
+        .info-box {
+            margin-top: 25px;
+
+            padding: 15px 18px;
+
+            background: #eff6ff;
+
+            border-left: 4px solid #2563eb;
+
+            border-radius: 6px;
+
+            color: #374151;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        /* =========================
+           ERROR MESSAGE
+        ========================= */
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 12px 15px;
+
+            border-radius: 6px;
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            font-size: 14px;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .actions {
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 12px 22px;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            border: none;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        .save-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .cancel-btn {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .cancel-btn:hover {
+            background: #d1d5db;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 15px 20px;
+
+                flex-direction: column;
+
+                gap: 12px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .form-card {
+                padding: 25px 20px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <div class="navbar">
+
+        <h2>
+            📚 Library Management System
+        </h2>
+
+        <div class="nav-links">
+
+            <a href="{% url 'home' %}">
+                Dashboard
+            </a>
+
+            <a href="{% url 'books' %}">
+                Books
+            </a>
+
+            <a href="{% url 'members' %}">
+                Members
+            </a>
+
+            <a href="{% url 'issued_books' %}">
+                Issued Books
+            </a>
+
+            <a href="{% url 'logout' %}">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <div class="container">
+
+        <div class="page-title">
+
+            <h1>
+                Edit Book
+            </h1>
+
+            <p>
+                Update the information of
+                "{{ book.title }}".
+            </p>
+
+        </div>
+
+
+        <div class="form-card">
+
+
+            <!-- =========================
+                 MESSAGES
+            ========================= -->
+
+            {% if messages %}
+
+                <div class="messages">
+
+                    {% for message in messages %}
+
+                        <div class="message">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- =========================
+                 EDIT FORM
+            ========================= -->
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="form-grid">
+
+
+                    <!-- TITLE -->
+
+                    <div class="form-group full">
+
+                        <label for="title">
+                            Book Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            value="{{ book.title }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- AUTHOR -->
+
+                    <div class="form-group">
+
+                        <label for="author">
+                            Author
+                        </label>
+
+                        <input
+                            type="text"
+                            id="author"
+                            name="author"
+                            value="{{ book.author }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="form-group">
+
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <input
+                            type="text"
+                            id="category"
+                            name="category"
+                            value="{{ book.category }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- ISBN -->
+
+                    <div class="form-group">
+
+                        <label for="isbn">
+                            ISBN
+                        </label>
+
+                        <input
+                            type="text"
+                            id="isbn"
+                            name="isbn"
+                            value="{{ book.isbn }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- QUANTITY -->
+
+                    <div class="form-group">
+
+                        <label for="quantity">
+                            Total Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            id="quantity"
+                            name="quantity"
+                            value="{{ book.quantity }}"
+                            min="1"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PUBLISHED DATE -->
+
+                    <div class="form-group full">
+
+                        <label for="published_date">
+                            Published Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="published_date"
+                            name="published_date"
+
+                            {% if book.published_date %}
+                                value="{{ book.published_date|date:'Y-m-d' }}"
+                            {% endif %}
+
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     INFORMATION
+                ========================= -->
+
+                <div class="info-box">
+
+                    <strong>Important:</strong>
+
+                    If some copies of this book are currently
+                    issued, the total quantity cannot be reduced
+                    below the number of issued copies.
+
+                    <br><br>
+
+                    Available copies are automatically
+                    recalculated when you update the quantity.
+
+                </div>
+
+
+                <!-- =========================
+                     ACTIONS
+                ========================= -->
+
+                <div class="actions">
+
+                    <button
+                        type="submit"
+                        class="btn save-btn"
+                    >
+                        💾 Save Changes
+                    </button>
+
+
+                    <a
+                        href="{% url 'books' %}"
+                        class="btn cancel-btn"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+

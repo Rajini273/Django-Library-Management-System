@@ -1,0 +1,367 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Library Login</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+
+    /* =========================
+       PAGE BACKGROUND
+    ========================= */
+
+    body {
+
+        margin: 0;
+
+        font-family: Arial, sans-serif;
+
+        min-height: 100vh;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+
+        /* Library Background */
+
+        background-image:
+
+            linear-gradient(
+                rgba(0, 0, 0, 0.45),
+                rgba(0, 0, 0, 0.45)
+            ),
+
+            url("{% static 'home/images/library-bg.png' %}");
+
+
+        background-size: cover;
+
+        background-position: center;
+
+        background-repeat: no-repeat;
+
+        background-attachment: fixed;
+
+    }
+
+
+    /* =========================
+       LOGIN CARD
+    ========================= */
+
+    .login-container {
+
+        width: 430px;
+
+        background: rgba(
+            255,
+            255,
+            255,
+            0.96
+        );
+
+        padding: 40px;
+
+        border-radius: 18px;
+
+        box-shadow:
+
+            0 15px 45px
+            rgba(0, 0, 0, 0.30);
+
+        text-align: center;
+
+    }
+
+
+    /* =========================
+       LOGO
+    ========================= */
+
+    .logo {
+
+        font-size: 55px;
+
+        margin-bottom: 10px;
+
+    }
+
+
+    /* =========================
+       TITLE
+    ========================= */
+
+    h1 {
+
+        margin: 0;
+
+        color: #173b6c;
+
+        font-size: 27px;
+
+        line-height: 1.3;
+
+    }
+
+
+    .subtitle {
+
+        color: #667085;
+
+        margin: 12px 0 30px;
+
+        font-size: 15px;
+
+    }
+
+
+    /* =========================
+       ROLE BUTTONS
+    ========================= */
+
+    .role-button {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        width: 100%;
+
+        padding: 17px;
+
+        margin: 15px 0;
+
+        border-radius: 10px;
+
+        text-decoration: none;
+
+        font-size: 17px;
+
+        font-weight: bold;
+
+        transition: 0.25s;
+
+        box-shadow:
+
+            0 5px 12px
+            rgba(0, 0, 0, 0.12);
+
+    }
+
+
+    /* =========================
+       ADMIN BUTTON
+    ========================= */
+
+    .admin {
+
+        background: #1677ed;
+
+        color: white;
+
+    }
+
+
+    .admin:hover {
+
+        background: #0d5fc4;
+
+        transform: translateY(-2px);
+
+    }
+
+
+    /* =========================
+       MEMBER BUTTON
+    ========================= */
+
+    .member {
+
+        background: #20ad5a;
+
+        color: white;
+
+    }
+
+
+    .member:hover {
+
+        background: #178c48;
+
+        transform: translateY(-2px);
+
+    }
+
+
+    /* =========================
+       ICON
+    ========================= */
+
+    .role-icon {
+
+        font-size: 24px;
+
+        margin-right: 10px;
+
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer {
+
+        margin-top: 30px;
+
+        padding-top: 18px;
+
+        border-top: 1px solid #e0e0e0;
+
+        color: #8a94a6;
+
+        font-size: 13px;
+
+    }
+
+
+    /* =========================
+       MOBILE RESPONSIVE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+        .login-container {
+
+            width: 90%;
+
+            padding: 30px 25px;
+
+        }
+
+
+        h1 {
+
+            font-size: 23px;
+
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<!-- =========================
+     LOGIN CARD
+========================= -->
+
+<div class="login-container">
+
+
+    <!-- LOGO -->
+
+    <div class="logo">
+
+        📚
+
+    </div>
+
+
+    <!-- TITLE -->
+
+    <h1>
+
+        Library Management System
+
+    </h1>
+
+
+    <p class="subtitle">
+
+        Choose your login type
+
+    </p>
+
+
+    <!-- =========================
+         ADMIN LOGIN
+    ========================= -->
+
+    <a
+        href="{% url 'admin_login' %}"
+        class="role-button admin"
+    >
+
+        <span class="role-icon">
+
+            👨‍💼
+
+        </span>
+
+        Admin Login
+
+    </a>
+
+
+    <!-- =========================
+         MEMBER LOGIN
+    ========================= -->
+
+    <a
+        href="{% url 'member_login' %}"
+        class="role-button member"
+    >
+
+        <span class="role-icon">
+
+            👤
+
+        </span>
+
+        Member Login
+
+    </a>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <div class="footer">
+
+        Library Management System
+
+    </div>
+
+
+</div>
+```
+
+</body>
+
+</html>

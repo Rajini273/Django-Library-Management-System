@@ -1,0 +1,560 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Members | Library Management System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            background: #1f2937;
+            color: white;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .logout {
+            background: #dc3545;
+            padding: 8px 14px;
+            border-radius: 6px;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 92%;
+            max-width: 1250px;
+            margin: 35px auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            color: #1f2937;
+        }
+
+        .page-header p {
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        /* ADD MEMBER */
+
+        .add-btn {
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+
+            padding: 12px 20px;
+
+            border-radius: 7px;
+
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* SEARCH */
+
+        .search-box {
+            background: white;
+            padding: 20px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            width: 100%;
+
+            padding: 13px 15px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+        }
+
+        /* TABLE */
+
+        .table-container {
+            background: white;
+
+            border-radius: 10px;
+
+            overflow-x: auto;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #1f2937;
+            color: white;
+
+            padding: 15px;
+
+            text-align: left;
+
+            font-size: 14px;
+        }
+
+        td {
+            padding: 14px 15px;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        /* MEMBER ID */
+
+        .member-id {
+            background: #e0e7ff;
+            color: #3730a3;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        /* ACTIONS */
+
+        .actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 7px 11px;
+
+            border-radius: 5px;
+
+            text-decoration: none;
+
+            color: white;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .edit-btn {
+            background: #f59e0b;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+        }
+
+        .action-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* EMPTY */
+
+        .no-members {
+            text-align: center;
+            padding: 50px;
+
+            color: #6b7280;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+
+            margin: 40px 0 20px;
+
+            color: #6b7280;
+
+            font-size: 13px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 15px 20px;
+
+                flex-direction: column;
+
+                gap: 12px;
+            }
+
+            .page-header {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+    <h2>
+        📚 Library Management System
+    </h2>
+
+    <div class="nav-links">
+
+        <a href="{% url 'home' %}">
+            Dashboard
+        </a>
+
+        <a href="{% url 'books' %}">
+            Books
+        </a>
+
+        <a href="{% url 'issued_books' %}">
+            Issued Books
+        </a>
+
+        <a href="{% url 'logout' %}"
+           class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                👥 Members
+            </h1>
+
+            <p>
+                Manage registered library members.
+            </p>
+
+        </div>
+
+
+        <a href="{% url 'add_member' %}"
+           class="add-btn">
+
+            + Add Member
+
+        </a>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="memberSearch"
+            placeholder="🔎 Search by name, email, phone or membership ID..."
+            onkeyup="searchMembers()"
+        >
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div class="table-container">
+
+        <table id="membersTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Name
+                    </th>
+
+                    <th>
+                        Membership ID
+                    </th>
+
+                    <th>
+                        Email
+                    </th>
+
+                    <th>
+                        Phone
+                    </th>
+
+                    <th>
+                        Joined Date
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for member in members %}
+
+                <tr>
+
+                    <td>
+
+                        <strong>
+                            {{ member.name }}
+                        </strong>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="member-id">
+
+                            {{ member.membership_id }}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        {{ member.email }}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ member.phone }}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ member.joined_date|date:"d M Y" }}
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="actions">
+
+                            <a
+                                href="{% url 'edit_member' member.id %}"
+                                class="action-btn edit-btn"
+                            >
+                                Edit
+                            </a>
+
+
+                            <a
+                                href="{% url 'delete_member' member.id %}"
+                                class="action-btn delete-btn"
+                            >
+                                Delete
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="6">
+
+                        <div class="no-members">
+
+                            <h3>
+                                No Members Found
+                            </h3>
+
+                            <p>
+                                Start by adding a library member.
+                            </p>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    © 2026 Library Management System
+
+</footer>
+
+
+<!-- SEARCH JAVASCRIPT -->
+
+<script>
+
+function searchMembers() {
+
+    let input =
+        document.getElementById("memberSearch");
+
+    let filter =
+        input.value.toLowerCase();
+
+    let table =
+        document.getElementById("membersTable");
+
+    let rows =
+        table.getElementsByTagName("tr");
+
+
+    for (let i = 1; i < rows.length; i++) {
+
+        let rowText =
+            rows[i].innerText.toLowerCase();
+
+        if (rowText.includes(filter)) {
+
+            rows[i].style.display = "";
+
+        } else {
+
+            rows[i].style.display = "none";
+
+        }
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>
+

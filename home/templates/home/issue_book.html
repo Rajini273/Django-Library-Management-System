@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Issue Book | Library Management System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            background: #1f2937;
+            color: white;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .logout {
+            background: #dc3545;
+            padding: 8px 14px;
+            border-radius: 6px;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+            width: 92%;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            color: #1f2937;
+        }
+
+        .page-header p {
+            margin-top: 7px;
+            color: #6b7280;
+        }
+
+        /* =========================
+           FORM CARD
+        ========================= */
+
+        .form-card {
+            background: white;
+            padding: 35px;
+
+            border-radius: 12px;
+
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+
+            color: #374151;
+        }
+
+        select,
+        input {
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            background: white;
+
+            outline: none;
+        }
+
+        select:focus,
+        input:focus {
+            border-color: #2563eb;
+        }
+
+        .help-text {
+            margin-top: 6px;
+
+            color: #6b7280;
+
+            font-size: 12px;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .buttons {
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 30px;
+        }
+
+        .issue-btn {
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            padding: 13px 25px;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .issue-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .cancel-btn {
+            background: #e5e7eb;
+
+            color: #374151;
+
+            text-decoration: none;
+
+            padding: 13px 25px;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+        }
+
+        .cancel-btn:hover {
+            background: #d1d5db;
+        }
+
+        /* =========================
+           INFORMATION BOX
+        ========================= */
+
+        .info-box {
+            margin-top: 25px;
+
+            background: #eff6ff;
+
+            border-left: 4px solid #2563eb;
+
+            padding: 18px;
+
+            border-radius: 6px;
+        }
+
+        .info-box h3 {
+            color: #1e40af;
+
+            margin-bottom: 8px;
+
+            font-size: 16px;
+        }
+
+        .info-box p {
+            color: #374151;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            margin: 40px 0 20px;
+
+            color: #6b7280;
+
+            font-size: 13px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 15px 20px;
+
+                flex-direction: column;
+
+                gap: 12px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .form-card {
+                padding: 25px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .issue-btn,
+            .cancel-btn {
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<div class="navbar">
+
+    <h2>
+        📚 Library Management System
+    </h2>
+
+    <div class="nav-links">
+
+        <a href="{% url 'home' %}">
+            Dashboard
+        </a>
+
+        <a href="{% url 'books' %}">
+            Books
+        </a>
+
+        <a href="{% url 'members' %}">
+            Members
+        </a>
+
+        <a href="{% url 'issued_books' %}">
+            Issued Books
+        </a>
+
+        <a href="{% url 'logout' %}"
+           class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="container">
+
+
+    <div class="page-header">
+
+        <h1>
+            📖 Issue Book
+        </h1>
+
+        <p>
+            Issue an available book to a registered library member.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         FORM
+    ========================= -->
+
+    <div class="form-card">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <!-- BOOK -->
+
+            <div class="form-group">
+
+                <label for="book">
+                    Select Book
+                </label>
+
+                <select
+                    name="book"
+                    id="book"
+                    required
+                >
+
+                    <option value="">
+                        -- Select a Book --
+                    </option>
+
+                    {% for book in books %}
+
+                    <option value="{{ book.id }}">
+
+                        {{ book.title }}
+                        -
+                        {{ book.author }}
+                        ({{ book.available_quantity }} available)
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+                <p class="help-text">
+                    Only books with available copies are shown.
+                </p>
+
+            </div>
+
+
+            <!-- MEMBER -->
+
+            <div class="form-group">
+
+                <label for="member">
+                    Select Member
+                </label>
+
+                <select
+                    name="member"
+                    id="member"
+                    required
+                >
+
+                    <option value="">
+                        -- Select a Member --
+                    </option>
+
+                    {% for member in members %}
+
+                    <option value="{{ member.id }}">
+
+                        {{ member.name }}
+                        -
+                        {{ member.membership_id }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+                <p class="help-text">
+                    Select the member who will receive the book.
+                </p>
+
+            </div>
+
+
+            <!-- DUE DATE -->
+
+            <div class="form-group">
+
+                <label for="due_date">
+                    Due Date
+                </label>
+
+                <input
+                    type="date"
+                    name="due_date"
+                    id="due_date"
+                    required
+                >
+
+                <p class="help-text">
+                    The book should be returned on or before this date.
+                </p>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="buttons">
+
+                <button
+                    type="submit"
+                    class="issue-btn"
+                >
+                    📖 Issue Book
+                </button>
+
+
+                <a
+                    href="{% url 'home' %}"
+                    class="cancel-btn"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+
+        <!-- INFORMATION -->
+
+        <div class="info-box">
+
+            <h3>
+                ℹ️ Important
+            </h3>
+
+            <p>
+                Once a book is issued, its available quantity
+                will automatically decrease by one.
+                When the book is returned, the available quantity
+                will increase again.
+            </p>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    © 2026 Library Management System
+
+</footer>
+
+
+</body>
+
+</html>
+
